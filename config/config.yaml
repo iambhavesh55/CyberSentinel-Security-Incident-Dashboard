@@ -1,0 +1,38 @@
+# CyberSentinel Configuration
+elasticsearch:
+  host: "localhost"
+  port: 9200
+  index_prefix: "cybersentinel"
+  
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/cybersentinel.log"
+  
+data_sources:
+  log_directory: "data/raw_logs"
+  processed_directory: "data/processed_logs"
+  sample_data_directory: "data/sample_data"
+  
+security:
+  threat_indicators:
+    - "malware"
+    - "phishing" 
+    - "brute_force"
+    - "ddos"
+    - "sql_injection"
+    - "xss"
+  
+  suspicious_ports:
+    - 22    # SSH
+    - 23    # Telnet
+    - 135   # RPC
+    - 139   # NetBIOS
+    - 445   # SMB
+    - 1433  # SQL Server
+    - 3389  # RDP
+    
+monitoring:
+  collection_interval: 60  # seconds
+  batch_size: 1000
+  max_file_size: "100MB"
