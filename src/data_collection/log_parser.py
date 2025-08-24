@@ -218,10 +218,16 @@ class LogParser:
             
             for fmt in formats:
                 try:
-                    dt = datetime.strptime(timestamp_str.split()[0], fmt)
+                    # Try parsing the entire timestamp first to preserve information
+                    dt = datetime.strptime(timestamp_str, fmt)
                     return dt.isoformat()
                 except ValueError:
-                    continue
+                    try:
+                        # Some logs may include extra data after a space; fall back to the first token
+                        dt = datetime.strptime(timestamp_str.split()[0], fmt)
+                        return dt.isoformat()
+                    except ValueError:
+                        continue
             
             # If no format matches, return current time
             return datetime.now().isoformat()
